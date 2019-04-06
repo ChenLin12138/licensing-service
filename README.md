@@ -3,7 +3,7 @@ Spring Cloud Learning licensing-service
 ## What Is It?
 Spring cloud components learning.
 ## Spring Cloud components
-### Spring boot 2.1.4.RELEAS
+### Spring boot 2.1.4.RELEASE
 ### Actuator
 ## Download & Installation
 1. Download a Java SE Runtime Environment (JRE),release version 8 or later, from http://www.oracle.com/technetwork/java/javase/downloads/index.html
