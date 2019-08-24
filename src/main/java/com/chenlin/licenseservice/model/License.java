@@ -2,8 +2,12 @@ package com.chenlin.licenseservice.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 //告诉Spring这是一个JPA类
 @Entity
@@ -12,6 +16,8 @@ import javax.persistence.Table;
 public class License {
 	//Id表示该字段为主键
 	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+//	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	//将该字段映射到特定的数据库表中的列
 	@Column(name = "license_id", nullable = false)
 	private String licenseId;

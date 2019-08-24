@@ -20,7 +20,7 @@ public interface LicenseRepository extends CrudRepository<License, String>{
 	//查询语句被spring解析成select from 语句
 	public List<License> findByOrganizationId(String organizationId);
 	
-	public List<License> findByOrganizationIdAndLicenseId(String organizationId, String licenseId);
+	public License findByOrganizationIdAndLicenseId(String organizationId, String licenseId);
 	
 	
 }

@@ -14,7 +14,7 @@ http://maven.apache.org/download.cgi
 4. Set Maven Home.
 5. Import project as Existing maven projects.
 6. Use mvn clean install to install this project.
-## 体验
+## Demo
 本例主要目的在于利用spring cloud的actuator组件对服务情况进行获取。
 
 - 查看微服务开放了哪些url查询节点
@@ -26,5 +26,31 @@ http://localhost:8080/actuator/
 根据上面查询到开放了
 http://localhost:8080/actuator/health
 ```json
-{"status":"UP","details":{"diskSpace":{"status":"UP","details":{"total":249849593856,"free":204531458048,"threshold":10485760}}}}
+{
+    "licenseId": "728f9a66-e29f-4f83-9891-7e6b98a298d9",
+    "organizationId": "1",
+    "productName": "Nokia",
+    "licenseType": "Phone",
+    "licenseMax": 12,
+    "licenseAllocated": 1,
+    "comment": "exampleProperty"
+}
+```
+- POST请求
+POST一个json Body类型为JSON(Application/json)
+{
+    "organizationId": "1",
+    "productName": "Nokia",
+    "licenseType": "Phone",
+    "licenseMax": 12,
+    "licenseAllocated": 1,
+    "comment": "comment example"
+}
+结果会在数据库licenses表中发现这条数据
+
+- Get请求
+localhost:8080/v1/organizatons/1/licenses/728f9a66-e29f-4f83-9891-7e6b98a298d9
+查询结果
+```json
+{"licenseId":"728f9a66-e29f-4f83-9891-7e6b98a298d9","organizationId":"1","productName":"Nokia","licenseType":"Phone","licenseMax":12,"licenseAllocated":1,"comment":"exampleProperty"}
 ```
