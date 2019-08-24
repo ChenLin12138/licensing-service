@@ -46,7 +46,8 @@ POST一个json Body类型为JSON(Application/json)
     "licenseAllocated": 1,
     "comment": "comment example"
 }
-https://github.com/ChenLin12138/licensing-service/blob/master/demo/pic/LicensePostDemo.png
+![PostMan Post 范例](https://github.com/ChenLin12138/licensing-service/blob/master/demo/pic/LicensePostDemo.png)
+
 结果会在数据库licenses表中发现这条数据
 
 
@@ -56,4 +57,4 @@ localhost:8080/v1/organizatons/1/licenses/728f9a66-e29f-4f83-9891-7e6b98a298d9
 ```json
 {"licenseId":"728f9a66-e29f-4f83-9891-7e6b98a298d9","organizationId":"1","productName":"Nokia","licenseType":"Phone","licenseMax":12,"licenseAllocated":1,"comment":"exampleProperty"}
 ```
-https://github.com/ChenLin12138/licensing-service/blob/master/demo/pic/LicenseGetDemo.png
+![PostMan Get 范例](https://github.com/ChenLin12138/licensing-service/blob/master/demo/pic/LicenseGetDemo.png)
