@@ -26,8 +26,6 @@ public class LicenseServiceController {
 			@PathVariable("licenseId") String licenseId) {
 		
 		return licenseService.getLicense(organizationId, licenseId);
-//		return new License().withId(licenseId).withProductName("Teleco").withLicenseType("Seat")
-//				.withOrganizationId(organizationId);
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
