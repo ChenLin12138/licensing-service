@@ -137,6 +137,7 @@ http://localhost:8080/actuator/health
 ```
 - POST请求
 POST一个json Body类型为JSON(Application/json)
+```json
 {
     "organizationId": "1",
     "productName": "Nokia",
@@ -145,6 +146,7 @@ POST一个json Body类型为JSON(Application/json)
     "licenseAllocated": 1,
     "comment": "comment example"
 }
+```
 ![PostMan Post 范例](https://github.com/ChenLin12138/licensing-service/blob/master/demo/pic/LicensePostDemo.png)
 
 结果会在数据库licenses表中发现这条数据
