@@ -17,22 +17,27 @@ import com.chenlin.licenseservice.services.LicenseService;
 public class LicenseServiceController {
 
 	@Autowired
-    private LicenseService licenseService;
-	
+	private LicenseService licenseService;
+
 	private static final Logger logger = LoggerFactory.getLogger(LicenseServiceController.class);
-	
+
 	@RequestMapping(value = "/{licenseId}", method = RequestMethod.GET)
 	public License getLicenses(@PathVariable("organizationId") String organizationId,
 			@PathVariable("licenseId") String licenseId) {
-		
+
 		return licenseService.getLicense(organizationId, licenseId);
 	}
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public void saveLicense(@RequestBody License license) {
 		licenseService.saveLicense(license);
 	}
-	
-	
+
+	@RequestMapping(value = "/{licenseId}/{clientType}", method = RequestMethod.GET)
+	public License getLicensesWithClient(@PathVariable("organizationId") String organizationId,
+			@PathVariable("licenseId") String licenseId, @PathVariable("clientType") String clientType) {
+		return licenseService.getLicense(organizationId, licenseId, clientType);
+
+	}
 
 }

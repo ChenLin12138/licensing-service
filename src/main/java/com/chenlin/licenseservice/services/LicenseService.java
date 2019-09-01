@@ -6,8 +6,10 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.chenlin.licenseservice.client.OrganizationDiscoveryClient;
 import com.chenlin.licenseservice.config.ServiceConfig;
 import com.chenlin.licenseservice.model.License;
+import com.chenlin.licenseservice.model.Organization;
 import com.chenlin.licenseservice.repository.LicenseRepository;
 
 /**
@@ -22,6 +24,9 @@ public class LicenseService {
 
 	@Autowired
 	ServiceConfig config;
+	
+	@Autowired
+    OrganizationDiscoveryClient organizationDiscoveryClient;
 
 	public License getLicense(String organizationId, String licenseId) {
 		License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
@@ -45,8 +50,32 @@ public class LicenseService {
 		licenseRepository.delete(license);
 	}
 
+	public License getLicense(String organizationId, String licenseId, String clientType) {
+		License license = getLicense(organizationId,licenseId);
+		Organization organization = retrieveOrgInfo(organizationId, clientType);
+		return license.withOrganizationId(organization.getId())
+					  .withOrganizationName(organization.getContactName());
+	}
+
+	private Organization retrieveOrgInfo(String organizationId, String clientType) {
+		
+		Organization organization = null;
+		
+		switch(clientType) {
+			case "discovery":
+				System.out.println("I am using the discovery client");
+				organization = organizationDiscoveryClient.getOrganization(organizationId);
+				break;
+			default:	
+//				organization = organizationRestClient.getOrganization(organizationId);
+		}
+		
+		return organization; 
+	}
+
 	/*
 	 * 下面省略了其他代码，如果编译无法通过请喊作者补全
+	 * 但是作者任何他不会上传编译无法通过的代码
 	 */
 
 }

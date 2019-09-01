@@ -165,3 +165,9 @@ localhost:8080/v1/organizatons/1/licenses/728f9a66-e29f-4f83-9891-7e6b98a298d9
 }
 ```
 ![PostMan Get 范例](https://github.com/ChenLin12138/licensing-service/blob/master/demo/pic/LicenseGetDemo.png)
+## Bug
+下面代码无法获取任何Instance
+OrganizationDiscoveryClient
+```java
+List<ServiceInstance> instances = discoveryClient.getInstances("organizationservice");
+```

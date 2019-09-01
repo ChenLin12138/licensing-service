@@ -2,12 +2,9 @@ package com.chenlin.licenseservice.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.Transient;
 
 //告诉Spring这是一个JPA类
 @Entity
@@ -39,6 +36,9 @@ public class License {
 
 	@Column(name = "comment")
 	private String comment;
+	
+	@Transient
+	private String organizationName;
 
 	public String getLicenseId() {
 		return licenseId;
@@ -95,6 +95,14 @@ public class License {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+	
+	public String getOrganizationName() {
+		return organizationName;
+	}
+
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
+	}
 
 	public License withId(String id) {
 		this.setLicenseId(id);
@@ -128,6 +136,11 @@ public class License {
 
 	public License withComment(String comment) {
 		this.setComment(comment);
+		return this;
+	}
+	
+	public License withOrganizationName(String organizationName) {
+		this.setOrganizationName(organizationName);
 		return this;
 	}
 }
