@@ -167,9 +167,24 @@ localhost:8080/v1/organizatons/1/licenses/728f9a66-e29f-4f83-9891-7e6b98a298d9
 }
 ```
 ![PostMan Get 范例](https://github.com/ChenLin12138/licensing-service/blob/master/demo/pic/LicenseGetDemo.png)
-## Bug
-下面代码无法获取任何Instance
-OrganizationDiscoveryClient
-```java
-List<ServiceInstance> instances = discoveryClient.getInstances("organizationservice");
+
+- 通过Eureka Server调用OrganzationService获取OrganzationName
+http://localhost:8080/v1/organizatons/35690f33-71b1-4996-83f8-93b8ca411848/licenses/320db380-e373-4a65-9f25-c83115d76f1e/discovery
+获取如下结果，其中organization来自Organization数据库
+```json
+{
+    "licenseId": "320db380-e373-4a65-9f25-c83115d76f1e",
+    "organizationId": "35690f33-71b1-4996-83f8-93b8ca411848",
+    "productName": "VIVOX21",
+    "licenseType": "Phone",
+    "licenseMax": 12,
+    "licenseAllocated": 1,
+    "comment": "exampleProperty",
+    "organizationName": "testorgName"
+}
 ```
+License库
+![License库](https://github.com/ChenLin12138/licensing-service/blob/master/demo/pic/Database-default.png)
+Organzation库
+![Organzation库](https://github.com/ChenLin12138/licensing-service/blob/master/demo/pic/DataBase-Orgnazation.png)
+
