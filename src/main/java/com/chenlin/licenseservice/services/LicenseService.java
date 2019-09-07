@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chenlin.licenseservice.client.OrganizationDiscoveryClient;
+import com.chenlin.licenseservice.client.OrganizationFeignClient;
 import com.chenlin.licenseservice.config.ServiceConfig;
 import com.chenlin.licenseservice.model.License;
 import com.chenlin.licenseservice.model.Organization;
@@ -27,6 +28,9 @@ public class LicenseService {
 	
 	@Autowired
     OrganizationDiscoveryClient organizationDiscoveryClient;
+	
+	@Autowired
+	OrganizationFeignClient organizationFeignClient;
 
 	public License getLicense(String organizationId, String licenseId) {
 		License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
@@ -64,10 +68,16 @@ public class LicenseService {
 		switch(clientType) {
 			case "discovery":
 				System.out.println("I am using the discovery client");
-				organization = organizationDiscoveryClient.getOrganization(organizationId);
+				organization = organizationDiscoveryClient.getOrganizationByDiscovery(organizationId);
+				break;
+			case "ribbonresttemplate":
+				organization = organizationDiscoveryClient.getOrganizationByRibbonRestTemplate(organizationId);
+				break;
+			case "feign":
+				organization = organizationFeignClient.getOrganzationByFeign(organizationId);
 				break;
 			default:	
-//				organization = organizationRestClient.getOrganization(organizationId);
+				organization = organizationFeignClient.getOrganzationByFeign(organizationId);
 		}
 		
 		return organization; 

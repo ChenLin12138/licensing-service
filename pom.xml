@@ -46,6 +46,12 @@
      		<groupId>org.springframework.cloud</groupId>
       		<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
     	</dependency>
+    	<!-- 添加Feign依赖 -->
+    	<!--Spring Cloud 2.1.4中名字与书中引入的名字不同-->
+    	<dependency>
+     		 <groupId>org.springframework.cloud</groupId>
+      		 <artifactId>spring-cloud-starter-openfeign</artifactId>
+   		</dependency>
 		<!--使用JPA-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
