@@ -52,6 +52,16 @@
      		 <groupId>org.springframework.cloud</groupId>
       		 <artifactId>spring-cloud-starter-openfeign</artifactId>
    		</dependency>
+   		<!-- Hystrix -->
+    	<dependency>
+     		 <groupId>org.springframework.cloud</groupId>
+      		 <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+   		</dependency> 
+   		<!-- 暂时不添加此库 
+    	<dependency>
+     		 <groupId>com.netflix.hystrix</groupId>
+      		 <artifactId>hystrix-javanica</artifactId>
+   		</dependency>-->  		  		
 		<!--使用JPA-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

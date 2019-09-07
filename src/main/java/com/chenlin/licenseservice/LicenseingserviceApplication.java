@@ -2,6 +2,7 @@ package com.chenlin.licenseservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
@@ -20,9 +21,12 @@ import org.springframework.web.client.RestTemplate;
 //eureka server注册改服务。
 //@EnableEurekaClient
 @EnableFeignClients
+//通知Spring Cloud将要使用Hystrix服务
+@EnableCircuitBreaker
 public class LicenseingserviceApplication {
 	
 	//告知Spring Cloud创建一个支持Ribbon的RestTemplate
+	//在Feign模式下，不需要此配置
 	@LoadBalanced
 	@Bean
 	public RestTemplate getRestTemplate() {
