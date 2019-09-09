@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import com.chenlin.licenseservice.config.ServiceConfig;
 import com.chenlin.licenseservice.model.License;
 import com.chenlin.licenseservice.model.Organization;
 import com.chenlin.licenseservice.repository.LicenseRepository;
+import com.chenlin.licenseservice.utils.UserContextHolder;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
@@ -23,6 +26,9 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
 @Service
 public class LicenseService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
+	
 	@Autowired
 	private LicenseRepository licenseRepository;
 
@@ -67,12 +73,21 @@ public class LicenseService {
 	//threadPoolKey属性定义线程池的唯一名称
 	//coreSize定义线程池中核心线程数量（书中说是最大数量，懒得查资料）
 	//maxQueueSize用于定义线程池当前队列，它可以对传入的请求进行队列排序
-	@HystrixCommand(fallbackMethod = "buildFallbackLicense", threadPoolKey = "licenseByOrgThreadPool",
+	@HystrixCommand(fallbackMethod = "buildFallbackLicense", 
+			threadPoolKey = "licenseByOrgThreadPool",
 			threadPoolProperties = {
 					@HystrixProperty(name = "coreSize", value="30"),
-					@HystrixProperty(name = "maxQueueSize", value="10")}
+					@HystrixProperty(name = "maxQueueSize", value="10")},
+			commandProperties = {
+					@HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
+					@HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "75"),
+					@HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "7000"),
+					@HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "15000"),
+					@HystrixProperty(name = "metrics.rollingStats.numBuckets", value = "5")
+			}
 	)
 	public License getLicense(String organizationId, String licenseId, String clientType) {
+		logger.debug("getLicense Correlation id:{}",UserContextHolder.getContext().getCorrelationId());
 		randomlyRunlong();
 		License license = getLicense(organizationId, licenseId);
 		Organization organization = retrieveOrgInfo(organizationId, clientType);
