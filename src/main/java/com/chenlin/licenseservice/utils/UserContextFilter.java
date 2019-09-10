@@ -7,6 +7,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -17,6 +18,8 @@ import org.slf4j.LoggerFactory;
  * @date 2019-09-09
  */
 
+//添加此注解，SpringBoot会自动加载这个Filter
+@WebFilter(urlPatterns = "/*",filterName = "UserContextFilter")
 public class UserContextFilter implements Filter {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserContextFilter.class);
@@ -31,6 +34,7 @@ public class UserContextFilter implements Filter {
 		UserContextHolder.getContext().setUserId(httpServletRequest.getHeader(UserContext.USER_ID));
 		UserContextHolder.getContext().setAuthToken(httpServletRequest.getHeader(UserContext.AUTH_TOKEN));
 		UserContextHolder.getContext().setOrgId(httpServletRequest.getHeader(UserContext.ORG_ID));
+		logger.debug("getLicense Correlation id:{}",UserContextHolder.getContext().getCorrelationId());
 		chain.doFilter(httpServletRequest, response);
 	}
 

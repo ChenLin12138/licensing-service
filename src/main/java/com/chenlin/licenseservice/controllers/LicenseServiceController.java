@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chenlin.licenseservice.model.License;
 import com.chenlin.licenseservice.services.LicenseService;
+import com.chenlin.licenseservice.utils.UserContextHolder;
 
 @RestController
 @RequestMapping(value = "/v1/organizatons/{organizationId}/licenses")
@@ -36,6 +37,7 @@ public class LicenseServiceController {
 	@RequestMapping(value = "/{licenseId}/{clientType}", method = RequestMethod.GET)
 	public License getLicensesWithClient(@PathVariable("organizationId") String organizationId,
 			@PathVariable("licenseId") String licenseId, @PathVariable("clientType") String clientType) {
+		logger.debug("getLicense Correlation id:{}",UserContextHolder.getContext().getCorrelationId());
 		return licenseService.getLicense(organizationId, licenseId, clientType);
 
 	}

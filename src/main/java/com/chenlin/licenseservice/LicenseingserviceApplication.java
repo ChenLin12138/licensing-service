@@ -1,7 +1,10 @@
 package com.chenlin.licenseservice;
 
+import javax.servlet.annotation.WebFilter;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -23,6 +26,8 @@ import org.springframework.web.client.RestTemplate;
 @EnableFeignClients
 //通知Spring Cloud将要使用Hystrix服务
 @EnableCircuitBreaker
+//扫描@WebFilter注解，启动定义Filter
+@ServletComponentScan(basePackages = "com.chenlin.licenseservice.*")
 public class LicenseingserviceApplication {
 	
 	//告知Spring Cloud创建一个支持Ribbon的RestTemplate

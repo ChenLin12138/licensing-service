@@ -73,6 +73,11 @@ public class LicenseService {
 	//threadPoolKey属性定义线程池的唯一名称
 	//coreSize定义线程池中核心线程数量（书中说是最大数量，懒得查资料）
 	//maxQueueSize用于定义线程池当前队列，它可以对传入的请求进行队列排序
+	//circuitBreaker.requestVolumeThreshold:时间窗口内连续调用的次数：10次
+	//circuitBreaker.errorThresholdPercentage：75%的错误率将启动断路器
+	//circuitBreaker.sleepWindowInMilliseconds：在断路器启动后，7秒后发送另外一个请求验证短路的服务状态
+	//metrics.rollingStats.timeInMilliseconds：时间窗口长度为15秒
+	//metrics.rollingStats.numBuckets：时间窗口内统计的次数，15秒内统计3次
 	@HystrixCommand(fallbackMethod = "buildFallbackLicense", 
 			threadPoolKey = "licenseByOrgThreadPool",
 			threadPoolProperties = {
