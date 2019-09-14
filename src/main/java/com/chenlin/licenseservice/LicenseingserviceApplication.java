@@ -1,6 +1,7 @@
 package com.chenlin.licenseservice;
 
-import javax.servlet.annotation.WebFilter;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +10,10 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
+
+import com.chenlin.licenseservice.utils.UserContextInterceptor;
 
 @SpringBootApplication
 //访问http://<yourserver>:8080/refersh端点可以刷新spring自定义的属性
@@ -32,10 +36,24 @@ public class LicenseingserviceApplication {
 	
 	//告知Spring Cloud创建一个支持Ribbon的RestTemplate
 	//在Feign模式下，不需要此配置
+//	@LoadBalanced
+//	@Bean
+//	public RestTemplate getRestTemplate() {
+//		return new RestTemplate();
+//	}
+	
+	//Http中的关联id出站时使用
 	@LoadBalanced
 	@Bean
 	public RestTemplate getRestTemplate() {
-		return new RestTemplate();
+		RestTemplate template = new RestTemplate();
+		List<ClientHttpRequestInterceptor> interceptors = template.getInterceptors();
+		if(interceptors==null) {
+			template.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
+		}else {
+			interceptors.add(new UserContextInterceptor());
+		}
+		return template;
 	}
 	
 	public static void main(String[] args) {
