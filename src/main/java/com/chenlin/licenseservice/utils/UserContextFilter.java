@@ -29,10 +29,13 @@ public class UserContextFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
-		// 检索调用http首部中的值，将这些值存储在UserContextHolder中的UserContext中
+		//检索调用http首部中的值，将这些值存储在UserContextHolder中的UserContext中
 		UserContextHolder.getContext().setCorrelationId(httpServletRequest.getHeader(UserContext.CORRELATION_ID));
+		//获取userid设置进入contextHolder
 		UserContextHolder.getContext().setUserId(httpServletRequest.getHeader(UserContext.USER_ID));
+		//获取token设置进入contextHolder
 		UserContextHolder.getContext().setAuthToken(httpServletRequest.getHeader(UserContext.AUTH_TOKEN));
+		//获取orgid设置进入contextHolder
 		UserContextHolder.getContext().setOrgId(httpServletRequest.getHeader(UserContext.ORG_ID));
 		logger.debug("getLicense Correlation id:{}",UserContextHolder.getContext().getCorrelationId());
 		chain.doFilter(httpServletRequest, response);
