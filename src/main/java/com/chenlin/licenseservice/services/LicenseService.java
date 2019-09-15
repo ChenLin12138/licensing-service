@@ -102,10 +102,12 @@ public class LicenseService {
 	// 在后备方法中，返回了一个硬编码的值
 	// Fallback方法的名字必须和@HystrixCommand修饰的方法名一致
 	// 方法的参数和返回值也必须同@HystrixCommand修饰的方法一致
-	private License buildFallbackLicense(String organizationId, String licenseId, String clientType) {
+	private License buildFallbackLicense(String organizationId, String licenseId, String clientType, Throwable throwable) {
 		License license = new License();
 		license.withId(licenseId).withOrganizationId(organizationId)
 				.withProductName("Sorry no licenseing info currently availabe");
+		//捕获getLicense中的异常在此抛出
+		logger.error("getLicense error:{}", throwable.fillInStackTrace());
 		return license;
 	}
 
@@ -115,7 +117,6 @@ public class LicenseService {
 
 		switch (clientType) {
 		case "discovery":
-			System.out.println("I am using the discovery client");
 			organization = organizationDiscoveryClient.getOrganizationByDiscovery(organizationId);
 			break;
 		case "ribbonresttemplate":

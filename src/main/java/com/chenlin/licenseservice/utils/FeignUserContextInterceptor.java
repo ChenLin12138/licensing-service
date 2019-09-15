@@ -10,6 +10,7 @@ import feign.RequestTemplate;
  * @author Chen Lin
  * @date 2019-09-15
  */
+//为出站消息添加关联id
 public class FeignUserContextInterceptor implements RequestInterceptor {
 
 	private static final Logger logger = LoggerFactory.getLogger(FeignUserContextInterceptor.class);
@@ -21,6 +22,7 @@ public class FeignUserContextInterceptor implements RequestInterceptor {
 //		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 //		HttpServletRequest request = attributes.getRequest();
 //		String corellationId = request.getHeader(UserContext.CORRELATION_ID);
+//		throw new RuntimeException("I'm exception");
 		logger.debug("Licensing-service Correlation id:{}",UserContextHolder.getContext().getCorrelationId());
 		template.header(UserContext.CORRELATION_ID, UserContextHolder.getContext().getCorrelationId());
 	}
