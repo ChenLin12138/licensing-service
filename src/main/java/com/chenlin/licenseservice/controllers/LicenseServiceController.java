@@ -14,7 +14,7 @@ import com.chenlin.licenseservice.services.LicenseService;
 import com.chenlin.licenseservice.utils.UserContextHolder;
 
 @RestController
-@RequestMapping(value = "/v1/organizatons/{organizationId}/licenses")
+@RequestMapping(value = "/v1/organizations/{organizationId}/licenses")
 public class LicenseServiceController {
 
 	@Autowired
