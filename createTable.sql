@@ -8,3 +8,7 @@ CREATE TABLE `licenses` (
   `comment` char(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`license_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='licenses';
+
+INSERT INTO organization.organizations
+(organization_id, name, contact_name, contact_email, contact_phone)
+VALUES('35690f33-71b1-4996-83f8-93b8ca411848', 'orgnam', 'testorgName', 'scorpion_chenlin@163.com', '13499098898');
