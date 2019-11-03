@@ -2,30 +2,25 @@ package com.chenlin.licenseservice.events.models;
 
 /**
  * @author Chen Lin
- * @date 2019-10-28
+ * @date 2019-10-21
  */
 
 public class OrganizationChangeModel {
 	
+
 	private String type;
 	private String action;
 	private String organizationId;
 	private String correlationId;
-	
-	public OrganizationChangeModel() {
-		super();
-	}
 	
 	public OrganizationChangeModel(String type, String action, String organizationId, String correlationId) {
 		super();
 		this.type = type;
 		this.action = action;
 		this.organizationId = organizationId;
-		this.correlationId = organizationId;
+		this.correlationId = correlationId;
 	}
-	
-	
-	
+
 	public String getType() {
 		return type;
 	}
@@ -57,13 +52,4 @@ public class OrganizationChangeModel {
 	public void setCorrelationId(String correlationId) {
 		this.correlationId = correlationId;
 	}
-
-	@Override
-    public String toString() {
-        return "OrganizationChangeModel [type=" + type +
-                ", action=" + action +
-                ", orgId="  + organizationId +
-                ", correlationId=" + correlationId + "]";
-    }
-	
 }
