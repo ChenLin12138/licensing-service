@@ -25,6 +25,7 @@ public class FeignUserContextInterceptor implements RequestInterceptor {
 //		throw new RuntimeException("I'm exception");
 		logger.debug("Licensing-service Correlation id:{}",UserContextHolder.getContext().getCorrelationId());
 		template.header(UserContext.CORRELATION_ID, UserContextHolder.getContext().getCorrelationId());
+		template.header(UserContext.AUTHORIZATION, UserContextHolder.getContext().getAuthorization());
 	}
 
 }
