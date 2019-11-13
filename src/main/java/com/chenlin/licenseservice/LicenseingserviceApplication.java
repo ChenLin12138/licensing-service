@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -15,9 +16,12 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
 
+import com.chenlin.licenseservice.config.ServiceConfig;
 import com.chenlin.licenseservice.events.models.OrganizationChangeModel;
 import com.chenlin.licenseservice.utils.UserContextInterceptor;
 
@@ -40,7 +44,7 @@ import com.chenlin.licenseservice.utils.UserContextInterceptor;
 //扫描@WebFilter注解，启动定义Filter
 @ServletComponentScan(basePackages = "com.chenlin.licenseservice.*")
 //告知服务使用Sink接口中的定义通道来监听传入的消息
-@EnableBinding(Sink.class)
+//@EnableBinding(Sink.class)
 public class LicenseingserviceApplication {
 	
 	//告知Spring Cloud创建一个支持Ribbon的RestTemplate
@@ -52,6 +56,9 @@ public class LicenseingserviceApplication {
 //	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(LicenseingserviceApplication.class);
+	
+	@Autowired
+	private ServiceConfig serviceConfig;
 	
 	//Http中的关联id出站时使用
 	@LoadBalanced
@@ -68,10 +75,29 @@ public class LicenseingserviceApplication {
 	}
 	
 	//每次收到来自input通道的消息，spring cloud stream调用此方法
-	@StreamListener(Sink.INPUT)
-	public void loggerSink(OrganizationChangeModel orgChange) {
-		logger.debug("Received an event for organization id {}",orgChange.getOrganizationId());
+//	@StreamListener(Sink.INPUT)
+//	public void loggerSink(OrganizationChangeModel orgChange) {
+//		logger.debug("Received an event for organization id {}",orgChange.getOrganizationId());
+//	}
+	
+	//jedisConnectionFactory()方法设置到Redis服务器的实际数据库连接
+	@Bean
+	public JedisConnectionFactory jedisConnectionFactory() {
+		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
+		jedisConnectionFactory.setHostName(serviceConfig.getRedisServer());
+		jedisConnectionFactory.setPort(serviceConfig.getRedisPort());
+		return jedisConnectionFactory;
 	}
+	
+	//redisTemplate()方法创建一个RedisTemplate，用于对Redis服务器质性进行操作
+	@Bean
+	public RedisTemplate<String, Object> redisTemplate(){
+		RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
+		template.setConnectionFactory(jedisConnectionFactory());
+		return template;
+	}
+	
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(LicenseingserviceApplication.class, args);

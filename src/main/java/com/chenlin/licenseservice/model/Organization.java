@@ -1,11 +1,18 @@
 package com.chenlin.licenseservice.model;
 
+import java.io.Serializable;
+
 /**
  * @author Chen Lin
  * @date 2019-08-31
  */
 
-public class Organization {
+public class Organization implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 914000546578717957L;
 	
 	String id;
 	String name;

@@ -15,9 +15,25 @@ public class ServiceConfig {
 	@Value("exampleProperty")
 	private String exampleProperty;
 	
+//	@Value("${redis.server}")
+	@Value("localhost")
+	private String redisServer;
+
+//	@Value("${redis.port}")
+	@Value("6379")
+	private String redisPort;
+	
 	public String getExampleProperty() {
 		// TODO Auto-generated method stub
 		return exampleProperty;
+	}
+
+	public String getRedisServer(){
+	    return redisServer;
+	}
+
+	public Integer getRedisPort(){
+	    return new Integer( redisPort ).intValue();
 	}
 
 }
