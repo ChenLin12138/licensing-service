@@ -84,8 +84,11 @@ public class LicenseingserviceApplication {
 	@Bean
 	public JedisConnectionFactory jedisConnectionFactory() {
 		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-		jedisConnectionFactory.setHostName(serviceConfig.getRedisServer());
-		jedisConnectionFactory.setPort(serviceConfig.getRedisPort());
+		//你会发现其实这是两句废话，因为在JedisConnectionFactory中包含了一个属性StandaloneConfiguration
+		//他的默认hostName就是localhost
+		//默认port就是6379
+		jedisConnectionFactory.getStandaloneConfiguration().setHostName(serviceConfig.getRedisServer());
+		jedisConnectionFactory.getStandaloneConfiguration().setPort(serviceConfig.getRedisPort());
 		return jedisConnectionFactory;
 	}
 	
