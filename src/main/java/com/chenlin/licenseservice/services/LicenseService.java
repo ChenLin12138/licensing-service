@@ -92,7 +92,7 @@ public class LicenseService {
 			}
 	)
 	public License getLicense(String organizationId, String licenseId, String clientType) {
-		logger.debug("getLicense Correlation id:{}",UserContextHolder.getContext().getCorrelationId());
+		logger.debug("getLicense Correlation id Hystrix Method:{}",UserContextHolder.getContext().getCorrelationId());
 //		randomlyRunlong();
 		License license = getLicense(organizationId, licenseId);
 		Organization organization = retrieveOrgInfo(organizationId, clientType);
