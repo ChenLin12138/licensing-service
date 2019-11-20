@@ -7,14 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,7 +20,6 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
 
 import com.chenlin.licenseservice.config.ServiceConfig;
-import com.chenlin.licenseservice.events.models.OrganizationChangeModel;
 import com.chenlin.licenseservice.utils.UserContextInterceptor;
 
 
@@ -45,6 +42,7 @@ import com.chenlin.licenseservice.utils.UserContextInterceptor;
 @ServletComponentScan(basePackages = "com.chenlin.licenseservice.*")
 //告知服务使用Sink接口中的定义通道来监听传入的消息
 //@EnableBinding(Sink.class)
+@EnableAutoConfiguration
 public class LicenseingserviceApplication {
 	
 	//告知Spring Cloud创建一个支持Ribbon的RestTemplate

@@ -13,6 +13,10 @@ import com.chenlin.licenseservice.model.License;
 import com.chenlin.licenseservice.services.LicenseService;
 import com.chenlin.licenseservice.utils.UserContextHolder;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(description = "License接口")
 @RestController
 @RequestMapping(value = "/v1/organizations/{organizationId}/licenses")
 public class LicenseServiceController {
@@ -22,18 +26,21 @@ public class LicenseServiceController {
 
 	private static final Logger logger = LoggerFactory.getLogger(LicenseServiceController.class);
 
+	@ApiOperation(value = "查询License" ,  notes="查询License")
 	@RequestMapping(value = "/{licenseId}", method = RequestMethod.GET)
 	public License getLicenses(@PathVariable("organizationId") String organizationId,
 			@PathVariable("licenseId") String licenseId) {
 
 		return licenseService.getLicense(organizationId, licenseId);
 	}
-
+	
+	@ApiOperation(value = "存储License" ,  notes="存储License")
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public void saveLicense(@RequestBody License license) {
 		licenseService.saveLicense(license);
 	}
-
+	
+	@ApiOperation(value = "带type的查询License" ,  notes="带type的查询License")
 	@RequestMapping(value = "/{licenseId}/{clientType}", method = RequestMethod.GET)
 	public License getLicensesWithClient(@PathVariable("organizationId") String organizationId,
 			@PathVariable("licenseId") String licenseId, @PathVariable("clientType") String clientType) {

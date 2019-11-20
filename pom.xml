@@ -30,6 +30,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<swagger.version>2.6.0</swagger.version>
 	</properties>
 	
 	<dependencies>
@@ -116,11 +117,25 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-client</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- 引入swagger -->
+		<dependency>
+	    	<groupId>io.springfox</groupId>
+	    	<artifactId>springfox-swagger2</artifactId>
+	    	<version>${swagger.version}</version>
+		</dependency>
+		<dependency>
+	    	<groupId>io.springfox</groupId>
+	    	<artifactId>springfox-swagger-ui</artifactId>
+	 	    <version>${swagger.version}</version>
+		</dependency>
+		
 	</dependencies>
 <!-- 告诉Maven包含特定的Spring boot插件，用于构建和部署Spring应用程序 -->
 	<build>
