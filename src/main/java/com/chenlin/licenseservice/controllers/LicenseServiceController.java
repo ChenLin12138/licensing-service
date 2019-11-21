@@ -16,7 +16,7 @@ import com.chenlin.licenseservice.utils.UserContextHolder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(description = "License接口")
+@Api(tags="License")
 @RestController
 @RequestMapping(value = "/v1/organizations/{organizationId}/licenses")
 public class LicenseServiceController {
@@ -26,7 +26,7 @@ public class LicenseServiceController {
 
 	private static final Logger logger = LoggerFactory.getLogger(LicenseServiceController.class);
 
-	@ApiOperation(value = "查询License" ,  notes="查询License")
+	@ApiOperation(value = "查询License信息" ,  notes="通过organizationId和licenseId获取指定的License信息，默认使用Feign方式")
 	@RequestMapping(value = "/{licenseId}", method = RequestMethod.GET)
 	public License getLicenses(@PathVariable("organizationId") String organizationId,
 			@PathVariable("licenseId") String licenseId) {
@@ -34,13 +34,13 @@ public class LicenseServiceController {
 		return licenseService.getLicense(organizationId, licenseId);
 	}
 	
-	@ApiOperation(value = "存储License" ,  notes="存储License")
+	@ApiOperation(value = "添加Licnese信息" ,  notes="为指定的organizationId添加License")
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public void saveLicense(@RequestBody License license) {
 		licenseService.saveLicense(license);
 	}
 	
-	@ApiOperation(value = "带type的查询License" ,  notes="带type的查询License")
+	@ApiOperation(value = "以指定方法查询License信息" ,  notes="通过organizationId和licenseId获取指定的License信息，默认使用Feign方式，通过clientType控制程序使用feign,discovery,ribbonresttemplate方式远程调用Organization服务")
 	@RequestMapping(value = "/{licenseId}/{clientType}", method = RequestMethod.GET)
 	public License getLicensesWithClient(@PathVariable("organizationId") String organizationId,
 			@PathVariable("licenseId") String licenseId, @PathVariable("clientType") String clientType) {
