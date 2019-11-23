@@ -22,6 +22,8 @@ import org.springframework.web.client.RestTemplate;
 import com.chenlin.licenseservice.config.ServiceConfig;
 import com.chenlin.licenseservice.utils.UserContextInterceptor;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 
 @SpringBootApplication
 //访问http://<yourserver>:8080/refersh端点可以刷新spring自定义的属性
@@ -43,6 +45,7 @@ import com.chenlin.licenseservice.utils.UserContextInterceptor;
 //告知服务使用Sink接口中的定义通道来监听传入的消息
 //@EnableBinding(Sink.class)
 @EnableAutoConfiguration
+@EnableSwagger2
 public class LicenseingserviceApplication {
 	
 	//告知Spring Cloud创建一个支持Ribbon的RestTemplate
